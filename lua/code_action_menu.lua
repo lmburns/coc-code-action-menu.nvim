@@ -1,6 +1,6 @@
 local api = vim.api
 
-local shared_utils = require('code_action_menu.shared_utils')
+local action_utils = require('code_action_menu.utility_functions.actions')
 local AnchorWindow = require('code_action_menu.windows.anchor_window')
 local MenuWindow = require('code_action_menu.windows.menu_window')
 local DetailsWindow = require('code_action_menu.windows.details_window')
@@ -46,13 +46,30 @@ local function open_code_action_menu(mode)
     vim.notify('Coc is not ready!', vim.log.levels.ERROR)
     return
   end
+
   -- Might still be open.
   close_code_action_menu()
   close_warning_message_window()
 
   mode = mode or api.nvim_get_mode().mode
+  -- local use_range = vim.api.nvim_get_mode().mode ~= 'n'
+  -- local all_actions = action_utils.request_actions_from_all_servers(use_range)
+  --
+  -- if #all_actions == 0 then
+  --   warning_message_window_instace = WarningMessageWindow:new()
+  --   warning_message_window_instace:open()
+  --   vim.api.nvim_command(
+  --     'autocmd! CursorMoved <buffer> ++once lua require("code_action_menu").close_warning_message_window()'
+  --   )
+  -- else
+  --   anchor_window_instance = AnchorWindow:new()
+  --   menu_window_instance = MenuWindow:new(all_actions)
+  --   menu_window_instance:open({
+  --     window_stack = { anchor_window_instance },
+  --   })
+  -- end
 
-  shared_utils.request_servers_for_actions(mode, function(all_actions)
+  action_utils.request_servers_for_actions(mode, function(all_actions)
     if #all_actions == 0 then
       warning_message_window_instace = WarningMessageWindow:new()
       warning_message_window_instace:open()
@@ -77,35 +94,47 @@ local function open_code_action_menu(mode)
   end)
 end
 
+local function update_details_window(selected_action)
+  if
+    vim.g.code_action_menu_show_details == nil
+    or vim.g.code_action_menu_show_details
+  then
+    if details_window_instance == nil then
+      details_window_instance = DetailsWindow:new(selected_action)
+    else
+      details_window_instance:set_action(selected_action)
+    end
+
+    local window_stack = { anchor_window_instance, menu_window_instance }
+
+    details_window_instance:open({ window_stack = window_stack })
+  end
+end
+
+local function update_diff_window(selected_action)
+  if
+    vim.g.code_action_menu_show_diff == nil or vim.g.code_action_menu_show_diff
+  then
+    if diff_window_instance == nil then
+      diff_window_instance = DiffWindow:new(selected_action)
+    else
+      diff_window_instance:set_action(selected_action)
+    end
+
+    local window_stack = { anchor_window_instance, menu_window_instance }
+
+    if details_window_instance ~= nil then
+      table.insert(window_stack, details_window_instance)
+    end
+
+    diff_window_instance:open({ window_stack = window_stack })
+  end
+end
+
 local function update_selected_action()
   local selected_action = menu_window_instance:get_selected_action()
-
-  if details_window_instance == nil then
-    details_window_instance = DetailsWindow:new(selected_action)
-  else
-    details_window_instance:set_action(selected_action)
-  end
-
-  details_window_instance:open({
-    window_stack = {
-      anchor_window_instance,
-      menu_window_instance,
-    },
-  })
-
-  if diff_window_instance == nil then
-    diff_window_instance = DiffWindow:new(selected_action)
-  else
-    diff_window_instance:set_action(selected_action)
-  end
-
-  diff_window_instance:open({
-    window_stack = {
-      anchor_window_instance,
-      menu_window_instance,
-      details_window_instance,
-    },
-  })
+  update_details_window(selected_action)
+  update_diff_window(selected_action)
 end
 
 local function execute_selected_action()

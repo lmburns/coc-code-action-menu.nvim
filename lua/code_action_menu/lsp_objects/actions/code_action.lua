@@ -77,6 +77,17 @@ function CodeAction:get_workspace_edit()
 end
 
 function CodeAction:execute()
+  -- if self:is_workspace_edit() then
+  --   vim.lsp.util.apply_workspace_edit(self.server_data.edit, 'utf-8')
+  -- elseif self:is_command() then
+  --   vim.lsp.buf.execute_command(self.server_data.command)
+  -- else
+  --   vim.api.nvim_notify(
+  --     'Failed to execute code action of unknown kind!',
+  --     vim.log.levels.ERROR,
+  --     {}
+  --   )
+  -- end
   vim.fn.CocActionAsync('doCodeAction', self.server_data)
 end
 
