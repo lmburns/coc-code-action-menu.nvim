@@ -1,5 +1,5 @@
-local Command = require('code_action_menu.lsp_objects.actions.command')
-local CodeAction = require('code_action_menu.lsp_objects.actions.code_action')
+local Command = require('coc_code_action_menu.lsp_objects.actions.command')
+local CodeAction = require('coc_code_action_menu.lsp_objects.actions.code_action')
 
 local function unpack_result_and_error(server_data, client_id)
   local client = vim.lsp.get_client_by_id(client_id)

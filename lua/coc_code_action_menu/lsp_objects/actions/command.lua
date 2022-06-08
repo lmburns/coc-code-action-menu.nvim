@@ -1,9 +1,9 @@
-local BaseAction = require('code_action_menu.lsp_objects.actions.base_action')
+local BaseAction = require('coc_code_action_menu.lsp_objects.actions.base_action')
 local TextDocumentEdit = require(
-  'code_action_menu.lsp_objects.edits.text_document_edit'
+  'coc_code_action_menu.lsp_objects.edits.text_document_edit'
 )
 local WorkspaceEdit = require(
-  'code_action_menu.lsp_objects.edits.workspace_edit'
+  'coc_code_action_menu.lsp_objects.edits.workspace_edit'
 )
 
 local Command = BaseAction:new({})

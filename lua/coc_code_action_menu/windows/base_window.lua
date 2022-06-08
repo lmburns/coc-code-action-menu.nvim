@@ -1,4 +1,4 @@
-local buffer_utils = require('code_action_menu.utility_functions.buffers')
+local buffer_utils = require('coc_code_action_menu.utility_functions.buffers')
 
 local BaseWindow = {
   window_number = -1,
@@ -6,7 +6,7 @@ local BaseWindow = {
   buffer_number = -1,
   focusable = false,
   filetype = '',
-  namespace_id = vim.api.nvim_create_namespace('code_action_menu'),
+  namespace_id = vim.api.nvim_create_namespace('coc_code_action_menu'),
 }
 
 function BaseWindow:new(base_object)

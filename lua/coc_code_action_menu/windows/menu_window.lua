@@ -1,5 +1,5 @@
-local action_utils = require('code_action_menu.utility_functions.actions')
-local StackingWindow = require('code_action_menu.windows.stacking_window')
+local action_utils = require('coc_code_action_menu.utility_functions.actions')
+local StackingWindow = require('coc_code_action_menu.windows.stacking_window')
 
 local function format_summary_for_action(action, index)
   vim.validate({ ['action to format summary for'] = { action, 'table' } })

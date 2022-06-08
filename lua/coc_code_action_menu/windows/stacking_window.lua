@@ -1,7 +1,7 @@
-local buffer_utils = require('code_action_menu.utility_functions.buffers')
-local BaseWindow = require('code_action_menu.windows.base_window')
+local buffer_utils = require('coc_code_action_menu.utility_functions.buffers')
+local BaseWindow = require('coc_code_action_menu.windows.base_window')
 local WindowStackDirectionEnum = require(
-  'code_action_menu.enumerations.window_stack_direction_enum'
+  'coc_code_action_menu.enumerations.window_stack_direction_enum'
 )
 
 local function decide_for_direction(anchor_window)

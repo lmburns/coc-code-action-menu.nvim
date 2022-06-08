@@ -1,4 +1,4 @@
-local BaseWindow = require('code_action_menu.windows.base_window')
+local BaseWindow = require('coc_code_action_menu.windows.base_window')
 
 local WarningMessageWindow = BaseWindow:new()
 

@@ -1,5 +1,5 @@
 local TextDocumentEditStatusEnum = require(
-  'code_action_menu.enumerations.text_document_edit_status_enum'
+  'coc_code_action_menu.enumerations.text_document_edit_status_enum'
 )
 
 local inaccessible_content_placeholder = '<inaccessible content>'

@@ -1,12 +1,12 @@
 local api = vim.api
 
-local action_utils = require('code_action_menu.utility_functions.actions')
-local AnchorWindow = require('code_action_menu.windows.anchor_window')
-local MenuWindow = require('code_action_menu.windows.menu_window')
-local DetailsWindow = require('code_action_menu.windows.details_window')
-local DiffWindow = require('code_action_menu.windows.diff_window')
+local action_utils = require('coc_code_action_menu.utility_functions.actions')
+local AnchorWindow = require('coc_code_action_menu.windows.anchor_window')
+local MenuWindow = require('coc_code_action_menu.windows.menu_window')
+local DetailsWindow = require('coc_code_action_menu.windows.details_window')
+local DiffWindow = require('coc_code_action_menu.windows.diff_window')
 local WarningMessageWindow = require(
-  'code_action_menu.windows.warning_message_window'
+  'coc_code_action_menu.windows.warning_message_window'
 )
 
 local anchor_window_instance = nil
@@ -74,7 +74,7 @@ local function open_code_action_menu(mode)
       warning_message_window_instace = WarningMessageWindow:new()
       warning_message_window_instace:open()
       vim.cmd(
-        'autocmd! CursorMoved <buffer> ++once lua require("code_action_menu").close_warning_message_window()'
+        'autocmd! CursorMoved <buffer> ++once lua require("coc_code_action_menu").close_warning_message_window()'
       )
     else
       anchor_window_instance = AnchorWindow:new()

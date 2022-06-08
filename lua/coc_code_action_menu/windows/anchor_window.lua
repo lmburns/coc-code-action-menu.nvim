@@ -1,4 +1,4 @@
-local BaseWindow = require('code_action_menu.windows.base_window')
+local BaseWindow = require('coc_code_action_menu.windows.base_window')
 
 local AnchorWindow = BaseWindow:new()
 
@@ -13,6 +13,11 @@ function AnchorWindow:new()
   local window_position = vim.api.nvim_win_get_position(window_number)
   local cursor_row = vim.api.nvim_call_function('winline', {})
   local cursor_column = vim.api.nvim_call_function('wincol', {})
+
+  -- local window_number = vim.fn.win_getid()
+  -- local window_position = vim.api.nvim_win_get_position(window_number)
+  -- local cursor_row = vim.fn.winline()
+  -- local cursor_column = vim.fn.wincol()
 
   local instance = BaseWindow:new({ is_anchor = true })
   setmetatable(instance, self)

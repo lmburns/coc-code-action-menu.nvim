@@ -1,4 +1,4 @@
-local StackingWindow = require('code_action_menu.windows.stacking_window')
+local StackingWindow = require('coc_code_action_menu.windows.stacking_window')
 
 local DetailsWindow = StackingWindow:new()
 

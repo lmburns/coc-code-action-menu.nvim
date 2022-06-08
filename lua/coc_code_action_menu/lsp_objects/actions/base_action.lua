@@ -1,5 +1,5 @@
 local WorkspaceEdit = require(
-  'code_action_menu.lsp_objects.edits.workspace_edit'
+  'coc_code_action_menu.lsp_objects.edits.workspace_edit'
 )
 
 local BaseAction = {}

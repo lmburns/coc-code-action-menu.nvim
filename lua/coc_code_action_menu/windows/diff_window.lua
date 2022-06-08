@@ -1,6 +1,6 @@
-local StackingWindow = require('code_action_menu.windows.stacking_window')
+local StackingWindow = require('coc_code_action_menu.windows.stacking_window')
 local TextDocumentEditStatusEnum = require(
-  'code_action_menu.enumerations.text_document_edit_status_enum'
+  'coc_code_action_menu.enumerations.text_document_edit_status_enum'
 )
 
 local function get_text_document_edit_status_icon(status)
