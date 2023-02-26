@@ -1,4 +1,4 @@
-local buffer_utils = require('coc_code_action_menu.utility_functions.buffers')
+local shared_utils = require('code_action_menu.shared_utils')
 
 local BaseWindow = {
   window_number = -1,
@@ -6,7 +6,7 @@ local BaseWindow = {
   buffer_number = -1,
   focusable = false,
   filetype = '',
-  namespace_id = vim.api.nvim_create_namespace('coc_code_action_menu'),
+  namespace_id = vim.api.nvim_create_namespace('code_action_menu'),
 }
 
 function BaseWindow:new(base_object)
@@ -43,11 +43,13 @@ function BaseWindow:create_buffer()
 end
 
 function BaseWindow:get_window_configuration(_)
-  local buffer_width = buffer_utils.get_buffer_width(self.buffer_number) + 1
-  local buffer_height = buffer_utils.get_buffer_height(self.buffer_number)
-  return vim.lsp.util.make_floating_popup_options(buffer_width, buffer_height, {
-    border = vim.g.code_action_menu_window_border or 'single',
-  })
+  local buffer_width = shared_utils.get_buffer_width(self.buffer_number) + 1
+  local buffer_height = shared_utils.get_buffer_height(self.buffer_number)
+  return vim.lsp.util.make_floating_popup_options(
+    buffer_width,
+    buffer_height,
+    { border = 'rounded' }
+  )
 end
 
 function BaseWindow:open(window_configuration_options)
@@ -65,7 +67,7 @@ function BaseWindow:open(window_configuration_options)
 
   self:update_buffer_content()
 
-  if buffer_utils.is_buffer_empty(self.buffer_number) then
+  if shared_utils.is_buffer_empty(self.buffer_number) then
     self:delete_buffer()
     self:close()
     return
@@ -74,7 +76,6 @@ function BaseWindow:open(window_configuration_options)
   local window_configuration = self:get_window_configuration(
     window_configuration_options
   )
-
   window_configuration.focusable = true
 
   if self.window_number == -1 then
@@ -90,6 +91,8 @@ function BaseWindow:open(window_configuration_options)
   end
 
   vim.wo[self.window_number].winblend = 0
+  vim.wo[self.window_number].winhl = "FloatBorder:CocCodeActionBorder"
+
   self:after_opened()
 end
 
